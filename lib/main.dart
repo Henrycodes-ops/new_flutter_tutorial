@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Learning',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       home: const MyHomePage(title: 'Flutter Learning'),
     );
   }
@@ -36,16 +38,35 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: SwipeDeck(
-        aspectRatio: 1,
-        startIndex: 0,
-        // emptyIndicator: Center(child: CircularProgressIndicator(),),
-        widgets: Images.map((e)
-         => Image.asset(
-          "assets/images/$e",
-          fit: BoxFit.cover,
-          )
-          ).toList(),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox.expand(
+            child: Center(
+              child: Container(
+                width: constraints.maxWidth * 0.8,
+                height: constraints.maxHeight * 0.8,
+                color: Colors.grey.shade300,
+                child: SwipeDeck(
+                  aspectRatio: 3 / 4,
+                  startIndex: 0,
+                  // allowRightSwipe: false,
+                  // allowLeftSwipe: false,
+                  widgets: Images.map(
+                    (e) => ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: SizedBox.expand(
+                        child: Image.asset(
+                          "assets/images/$e",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ).toList(),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
