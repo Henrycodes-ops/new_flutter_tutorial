@@ -46,4 +46,27 @@ void main() {
       expect(calculator.divide(4, 0), throwsArgumentError);
     });
   });
+
+
+  group('power of two tests', () {
+    test('returns 81 when the input is 9', () async {
+      expect(await calculator.powerOfTwo(9), 81);
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
