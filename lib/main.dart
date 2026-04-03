@@ -74,6 +74,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_flutter_tutorial/calculator.dart';
+import 'package:new_flutter_tutorial/operation.dart';
 import 'package:new_flutter_tutorial/two_digit_operation.dart';
 void main() {
   runApp( CalculatorApp());
@@ -93,22 +94,22 @@ class CalculatorApp extends StatelessWidget {
             child: Column(children: [
             TwoDigitOperation(
               calculator: calculator,
-              operation: calculator.add,
+              operation: Operation.add,
             ),
             Divider(),
             TwoDigitOperation(
               calculator: calculator,
-              operation: calculator.subtract,
+              operation: Operation.subtract,
             ),
             Divider(),
             TwoDigitOperation(
               calculator: calculator,
-              operation: calculator.multiply,
+              operation: Operation.multiply,
             ),
             Divider(),
             TwoDigitOperation(
               calculator: calculator,
-              operation: calculator.divide,
+              operation: Operation.divide,
             ),
             Divider(),
           ],),

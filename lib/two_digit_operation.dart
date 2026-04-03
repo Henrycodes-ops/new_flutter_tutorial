@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:new_flutter_tutorial/calculator.dart';
 
+import 'package:new_flutter_tutorial/operation.dart';
+
 class TwoDigitOperation extends StatefulWidget {
   final Calculator calculator;
-  final double Function(double a, double b) operation;
-  final String label;
+  final Operation operation;
 
   const TwoDigitOperation({
     super.key,
     required this.calculator,
     required this.operation,
-    this.label = 'Compute',
   });
 
   @override
@@ -34,9 +34,9 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
     }
 
     try {
-      final result = widget.operation(first, second);
+      final result = widget.operation.apply(widget.calculator, first, second);
       setState(() {
-        resultText = result.toString();
+        resultText = 'Result: $result';
       });
     } catch (error) {
       setState(() {
@@ -61,12 +61,13 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
+            Text(widget.operation.label, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: TextField(
+                    key: Key('textField_top_${widget.operation.operationName}'),
                     controller: firstController,
                     decoration: const InputDecoration(labelText: 'First number'),
                     keyboardType: TextInputType.number,
@@ -75,6 +76,7 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
+                    key: Key('textField_bottom_${widget.operation.operationName}'),
                     controller: secondController,
                     decoration: const InputDecoration(labelText: 'Second number'),
                     keyboardType: TextInputType.number,
@@ -85,9 +87,9 @@ class _TwoDigitOperationState extends State<TwoDigitOperation> {
             const SizedBox(height: 12),
             Row(
               children: [
-                ElevatedButton(onPressed: compute, child: const Text('Compute')),
+                ElevatedButton(onPressed: compute, child: Text(widget.operation.label)),
                 const SizedBox(width: 12),
-                Text('Result: $resultText'),
+                Text(resultText),
               ],
             ),
           ],
