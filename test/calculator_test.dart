@@ -43,7 +43,7 @@ void main() {
   group('divide tests', () {
     test('the calculator throws an ArgumentError when dividing by zero', () {
      
-      expect(calculator.divide(4, 0), throwsArgumentError);
+      expect(() => calculator.divide(4, 0), throwsArgumentError);
     });
   });
 
@@ -55,7 +55,11 @@ void main() {
   });
 
 
-
+  group('pi tests', () {
+    test('emits [3, 3.1, 3.14, 3.141, 3.1415] in order', () {
+      expect(calculator.pi(), emitsInOrder([3, 3.1, 3.14, 3.141, 3.1415]));
+    });
+  });
 
 
 
