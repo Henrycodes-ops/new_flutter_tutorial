@@ -3,17 +3,27 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:new_flutter_tutorial/calculator.dart';
 import 'package:new_flutter_tutorial/two_digit_operation.dart';
 import 'package:new_flutter_tutorial/operation.dart';
+import 'package:mockito/mockito.dart';
+
+
+class MockCalculator extends Mock implements Calculator {
+
+}
+
+
+
 
 void main() {
   late Calculator calculator;
 
   setUp(() {
-    calculator = Calculator();
+    calculator = MockCalculator();
   });
 
   group('TwoDigitOperation', () {
-    group('Operation.add', () {
-      testWidgets('prints 4.0 when adding 3 and 1', (tester) async {
+    group('Operation.divide', () {
+      testWidgets('prints the value returned by the calculator', (tester) async {
+        when(calculator.divide(3, 1)).thenThrow(Exception('oops'));
         await tester.pumpWidget(
           MaterialApp(
             home: Scaffold(
@@ -35,7 +45,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.byType(ElevatedButton));
         await tester.pumpAndSettle();
-        expect(find.text('Result: 4.0'), findsOneWidget);
+        expect(find.text('is ???'), findsOneWidget);
       });
     });
   });
